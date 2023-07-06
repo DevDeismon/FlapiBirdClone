@@ -1,17 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
+using Assets.Scripts;
+using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
 
 public class SpawnGeneralItems : MonoBehaviour
 {
-    [SerializeField] private GameObject Player;
-    [SerializeField] private GameObject ScorePanel;
-    [SerializeField] private GameObject PipesSpawner;
-    [SerializeField] private GameObject UiPanel;
-    private TMP_Text score;
-    public bool gameStarted = false;
+    [SerializeField] private GameObject _player;
+    [SerializeField] private GameObject _scorePanel;
+    [SerializeField] private GameObject _pipesSpawner;
+    [SerializeField] private GameObject _uiPanel;
+    [SerializeField] private GameObject _pipePack;
+    private bool gameStarted = false;
 
     private void Update()
     {
@@ -24,28 +23,43 @@ public class SpawnGeneralItems : MonoBehaviour
             }
         }
     }
-
     private void StartGame()
     {
         DisableStartUi();
+        EnableScorePanel();
+        ResetPipePack();
         InstantiateElements();
         ScoreToZero();
+        WakeUpGm();
+    }
+    private void ResetPipePack()
+    {
+        PipeController pipeController = _pipePack.GetComponent<PipeController>();
+        pipeController.SetSpeed(2f);
+    }
+    private void WakeUpGm()
+    {
+        var gm = this.GetComponent<GameMaster>();
+        gm.enabled = true;
+    }
+    private void EnableScorePanel()
+    {
+        _scorePanel.SetActive(true);
     }
     private void InstantiateElements()
     {
-        Instantiate(Player);
-        Instantiate(ScorePanel);
-        Instantiate(PipesSpawner);
+        Instantiate(_player);
+        Instantiate(_pipesSpawner);
     }
     private void ScoreToZero()
     {
-        score = GameObject.FindGameObjectWithTag("ScorePanel").GetComponentInChildren<TextMeshProUGUI>();
+        TMP_Text score = _scorePanel.GetComponentInChildren<TextMeshProUGUI>();
         score.text = "0";
     }
     private void DisableStartUi()
     {
-        var c = UiPanel.GetComponent<UiControlloer>();
-        string[] s = { "Get","Ready", "Start" };
-        c.ChangeStateItems(s,false);
+        var c = _uiPanel.GetComponent<UiControlloer>();
+        string[] s = { "Get", "Ready", "Start" };
+        c.ChangeStateItems(s, false);
     }
 }

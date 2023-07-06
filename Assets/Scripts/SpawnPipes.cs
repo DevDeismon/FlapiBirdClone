@@ -4,17 +4,24 @@ using UnityEngine;
 
 public class SpawnPipes : MonoBehaviour
 {
-    [SerializeField] private GameObject pipesPack;
-    [SerializeField] private float positionX;
-    [SerializeField] private float spawnRatio;
-    [SerializeField] private float minY;
-    [SerializeField] private float maxY;
+    [SerializeField] private float _spawnRatio;
+    [SerializeField] private GameObject _pipesPack;
+    [SerializeField] private float _positionX;
+    [SerializeField] private float _minY;
+    [SerializeField] private float _maxY;
 
-    private float t;
+    private float _t;
+
+    public float SpawnRatio
+    {
+        get { return _spawnRatio; }
+        set { _spawnRatio = value; }
+    }
+
     void Start()
     {
-        t = spawnRatio;
-        Instantiate(pipesPack, new Vector2(positionX, RandomY()), Quaternion.identity);
+        _t = SpawnRatio;
+        Instantiate(_pipesPack, new Vector2(_positionX, RandomY()), Quaternion.identity);
     }
 
     // Update is called once per frame
@@ -24,24 +31,24 @@ public class SpawnPipes : MonoBehaviour
     }
     private float RandomY()
     {
-        return Random.Range(minY, maxY);
+        return Random.Range(_minY, _maxY);
     }
     private void Spawn()
     {
-        t -= Time.deltaTime;
-        if (t <= 0)
+        _t -= Time.deltaTime;
+        if (_t <= 0)
         {
-            Instantiate(pipesPack, new Vector2(positionX, RandomY()), Quaternion.identity);
-            t = spawnRatio;
+            Instantiate(_pipesPack, new Vector2(_positionX, RandomY()), Quaternion.identity);
+            _t = SpawnRatio;
         }
     }
 
     public void SetSpawnPipes(float newRatio)
     {
-        this.spawnRatio = newRatio;
+        this.SpawnRatio = newRatio;
     }
-    public float GetspawnPipes()
+    public void ReduceSpawnRatio(float ratioReducer)
     {
-        return spawnRatio;
+        this.SpawnRatio -= ratioReducer;
     }
 }
