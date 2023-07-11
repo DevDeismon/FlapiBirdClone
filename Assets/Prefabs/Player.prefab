@@ -144,10 +144,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4138444792991676352}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0dc7fba248c9c5148be1e9a9015187bc, type: 3}
+  m_Script: {fileID: 11500000, guid: 24bc6bf3a5c072440bd0fe0c4b0a7c67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 4.5
+  force: 5
 --- !u!95 &6075780010101628588
 Animator:
   serializedVersion: 4

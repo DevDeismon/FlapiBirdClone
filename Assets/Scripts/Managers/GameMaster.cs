@@ -1,7 +1,6 @@
 ﻿using System;
-using UnityEngine;
 using TMPro;
-using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine;
 
 namespace Assets.Scripts
 {
@@ -48,10 +47,10 @@ namespace Assets.Scripts
             {
                 ReduceSpawnRate();
             }
-            if (_actualSpeed < _maxObjectSpeedMultiplier)
-            {
-                IncreaseObjectSpeed();
-            }
+            //if (_actualSpeed < _maxObjectSpeedMultiplier)
+            //{
+            //    IncreaseObjectSpeed();
+            //}
         }
         private void IncreaseObjectSpeed()
         {
@@ -77,13 +76,10 @@ namespace Assets.Scripts
                 throw new NullReferenceException("SpawnPipes is null!");
             }
         }
-        /// <summary>
-        /// Launch end game scene
-        /// </summary>
-        /// <exception cref="NotImplementedException"></exception>
         private void EndGame()
         {
-            throw new NotImplementedException();
+            var managerObject = this.transform.parent.gameObject;
+            // Call game over controller
         }
         /// <summary>
         /// Check if score is 999 or more

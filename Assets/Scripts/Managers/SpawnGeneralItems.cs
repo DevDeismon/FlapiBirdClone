@@ -1,5 +1,4 @@
 using Assets.Scripts;
-using System;
 using TMPro;
 using UnityEngine;
 
@@ -58,7 +57,7 @@ public class SpawnGeneralItems : MonoBehaviour
     }
     private void DisableStartUi()
     {
-        var c = _uiPanel.GetComponent<UiControlloer>();
+        var c = _uiPanel.GetComponent<UiController>();
         string[] s = { "Get", "Ready", "Start" };
         c.ChangeStateItems(s, false);
     }

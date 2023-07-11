@@ -4,7 +4,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 
-public class UiControlloer : MonoBehaviour
+public class UiController : MonoBehaviour
 {
     public void ChangeStateItems(string[] itemsName, bool state)
     {

@@ -1,14 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class ScoreController : MonoBehaviour
 {
     private TextMeshProUGUI _score;
     private GameObject _scorePanel;
-    // Start is called before the first frame update
     void Start()
     {
         _scorePanel = GameObject.FindGameObjectWithTag("ScorePanel");
@@ -17,8 +13,11 @@ public class ScoreController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        int actualScore = int.Parse(_score.text);
-        _score.text = AddScore(actualScore).ToString();
+        if (other.gameObject.tag.Equals("Player"))
+        {
+            int actualScore = int.Parse(_score.text);
+            _score.text = AddScore(actualScore).ToString();
+        }
     }
 
     private int AddScore(int actualScore)
