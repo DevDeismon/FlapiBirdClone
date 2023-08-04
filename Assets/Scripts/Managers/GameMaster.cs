@@ -13,7 +13,6 @@ namespace Assets.Scripts
         [SerializeField] private float _objectSpeedMultiplier;
         [SerializeField] private GameObject _pipePack;
 
-        private float _actualSpeed;
         private float _actualSpawn;
         private int _lastScore = 0;
         private GameObject _scorePanel;
@@ -32,7 +31,7 @@ namespace Assets.Scripts
         {
             if (CheckEndGame())
             {
-                EndGame();
+                WakeUpEndGame();
             }
             if (CheckScore())
             {
@@ -47,22 +46,6 @@ namespace Assets.Scripts
             {
                 ReduceSpawnRate();
             }
-            //if (_actualSpeed < _maxObjectSpeedMultiplier)
-            //{
-            //    IncreaseObjectSpeed();
-            //}
-        }
-        private void IncreaseObjectSpeed()
-        {
-            if (_pipePack.TryGetComponent<PipeController>(out var pipeController))
-            {
-                pipeController.UpSpeed(_objectSpeedMultiplier);
-                _actualSpeed = pipeController.Speed;
-            }
-            else
-            {
-                throw new NullReferenceException("pipeCOntroller is null!");
-            }
         }
         private void ReduceSpawnRate()
         {
@@ -76,11 +59,18 @@ namespace Assets.Scripts
                 throw new NullReferenceException("SpawnPipes is null!");
             }
         }
-        private void EndGame()
+        private void WakeUpEndGame()
         {
-            var managerObject = this.transform.parent.gameObject;
-            // Call game over controller
+            GameOverController gameOverController = this.GetComponent<GameOverController>();
+            gameOverController.enabled = true;
+            GoToSleep();
         }
+
+        private void GoToSleep()
+        {
+            this.enabled = false;
+        }
+
         /// <summary>
         /// Check if score is 999 or more
         /// </summary>
@@ -88,7 +78,8 @@ namespace Assets.Scripts
         private bool CheckEndGame()
         {
             GameObject scorePanel = FindGameObjectByName("ScorePanel");
-            return scorePanel != null && GetScore(scorePanel) >= _maxScore;
+            GameObject player = GameObject.FindWithTag("Player");
+            return player == null || scorePanel != null && GetScore(scorePanel) >= _maxScore;
         }
         private bool CheckScore()
         {

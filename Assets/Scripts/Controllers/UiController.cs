@@ -6,12 +6,20 @@ using UnityEngine;
 
 public class UiController : MonoBehaviour
 {
-    public void ChangeStateItems(string[] itemsName, bool state)
+    public void ChangeStateActiveItems(string[] itemsName)
     {
         for (int i = 0; i < itemsName.Length; i++)
         {
-            var n = GameObject.Find(itemsName[i]);
-            n.SetActive(state);
+            GameObject n = GameObject.Find(itemsName[i]);
+            n.SetActive(false);
+        }
+    }
+    public void ChangeStateInactiveItems(string[] itemsName)
+    {
+        for (int i = 0; i < itemsName.Length; i++)
+        {
+            GameObject n = transform.Find(itemsName[i]).gameObject;
+            n.SetActive(true);
         }
     }
 }

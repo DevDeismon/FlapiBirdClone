@@ -9,27 +9,15 @@ public class SpawnGeneralItems : MonoBehaviour
     [SerializeField] private GameObject _pipesSpawner;
     [SerializeField] private GameObject _uiPanel;
     [SerializeField] private GameObject _pipePack;
-    private bool gameStarted = false;
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (!gameStarted)
-            {
-                Invoke(nameof(StartGame), 0.5f);
-                gameStarted = true;
-            }
-        }
-    }
-    private void StartGame()
+    
+    public void StartGame()
     {
         DisableStartUi();
         EnableScorePanel();
         ResetPipePack();
         InstantiateElements();
         ScoreToZero();
-        WakeUpGm();
+        Invoke(nameof(WakeUpGm), 1f);
     }
     private void ResetPipePack()
     {
@@ -59,6 +47,6 @@ public class SpawnGeneralItems : MonoBehaviour
     {
         var c = _uiPanel.GetComponent<UiController>();
         string[] s = { "Get", "Ready", "Start" };
-        c.ChangeStateItems(s, false);
+        c.ChangeStateActiveItems(s);
     }
 }
